@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
         showDialog(
             context: context,
             builder: (context) => AlertDialog(
-                  title: const Text("ScratchWin"),
+                  title: const Text("Game Over"),
                   content: const Text("You won!"),
                   actions: [
                     TextButton(
@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
 
   ifUnlucky() {
     if (itemArray.contains("unlucky")) {
-      if (itemArray.where((element) => element == "empty").length == 20) {
+      if (itemArray.where((element) => unlucky == "empty").length == 20) {
         showAll();
 
         //add 3 seconds delay to popup
@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
           showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                    title: const Text("ScratchWin"),
+                    title: const Text("Game Over"),
                     content: const Text("You lost!"),
                     actions: [
                       TextButton(
@@ -128,14 +128,6 @@ class _HomePageState extends State<HomePage> {
         });
       }
     }
-  }
-
-  //if game ends show all function
-  showAllend() {
-    setState(() {
-      itemArray = List<String>.filled(25, "unlucky");
-      itemArray[luckyNumber] = "lucky";
-    });
   }
 
   @override
