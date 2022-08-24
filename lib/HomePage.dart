@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
 
   ifUnlucky() {
     if (itemArray.contains("unlucky")) {
-      if (itemArray.where((element) => unlucky == "empty").length == 20) {
+      if (itemArray.where((element) => element == "empty").length == 20) {
         showAll();
 
         //add 3 seconds delay to popup
