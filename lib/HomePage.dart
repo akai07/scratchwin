@@ -82,33 +82,12 @@ class _HomePageState extends State<HomePage> {
 
   ifLucky() {
     if (itemArray.contains("lucky")) {
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: const Text("ScratchWin"),
-                content: const Text("You won!"),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        resetGame();
-                      },
-                      child: const Text("Play Again"))
-                ],
-              ));
-    }
-  }
-
-//if Unlucky is found continue the game if array has 20 elements empty
-
-  ifUnlucky() {
-    if (itemArray.contains("unlucky")) {
-      if (itemArray.where((element) => element == "empty").length == 20) {
+      Future.delayed(const Duration(milliseconds: 500), () {
         showDialog(
             context: context,
             builder: (context) => AlertDialog(
                   title: const Text("ScratchWin"),
-                  content: const Text("You lost!"),
+                  content: const Text("You won!"),
                   actions: [
                     TextButton(
                         onPressed: () {
@@ -118,8 +97,45 @@ class _HomePageState extends State<HomePage> {
                         child: const Text("Play Again"))
                   ],
                 ));
+      });
+    }
+  }
+
+//if Unlucky is found continue the game if array has 20 elements empty
+
+  ifUnlucky() {
+    if (itemArray.contains("unlucky")) {
+      if (itemArray.where((element) => element == "empty").length == 20) {
+        showAll();
+
+        //add 3 seconds delay to popup
+
+        Future.delayed(const Duration(milliseconds: 500), () {
+          showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                    title: const Text("ScratchWin"),
+                    content: const Text("You lost!"),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            resetGame();
+                          },
+                          child: const Text("Play Again"))
+                    ],
+                  ));
+        });
       }
     }
+  }
+
+  //if game ends show all function
+  showAllend() {
+    setState(() {
+      itemArray = List<String>.filled(25, "unlucky");
+      itemArray[luckyNumber] = "lucky";
+    });
   }
 
   @override
