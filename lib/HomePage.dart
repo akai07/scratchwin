@@ -78,6 +78,50 @@ class _HomePageState extends State<HomePage> {
     generateRandomNumber();
   }
 
+//if Lucky is found End the game
+
+  ifLucky() {
+    if (itemArray.contains("lucky")) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: const Text("ScratchWin"),
+                content: const Text("You won!"),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        resetGame();
+                      },
+                      child: const Text("Play Again"))
+                ],
+              ));
+    }
+  }
+
+//if Unlucky is found continue the game if array has 20 elements empty
+
+  ifUnlucky() {
+    if (itemArray.contains("unlucky")) {
+      if (itemArray.where((element) => element == "empty").length == 20) {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: const Text("ScratchWin"),
+                  content: const Text("You lost!"),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          resetGame();
+                        },
+                        child: const Text("Play Again"))
+                  ],
+                ));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,6 +151,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                   onPressed: () {
                     playGame(i);
+                    ifLucky();
+                    ifUnlucky();
                   },
                   child: Image(
                     image: getImage(i),
